@@ -14,6 +14,7 @@ namespace TaskManagement.Infrastructure.EntityConfigurations
         public void Configure(EntityTypeBuilder<TaskWork> builder)
         {
             var navigation = builder.Metadata.FindNavigation(nameof(TaskWork.Notes));
+            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

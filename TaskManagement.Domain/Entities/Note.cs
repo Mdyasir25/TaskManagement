@@ -13,9 +13,7 @@ namespace TaskManagement.Domain.Entities
         [Required]
         public int TaskWorkId { get; private set; }
         [Required]
-        public int CreatorId { get; private set; }
-        [Required]
-        public bool CreatedByTeamLead { get; private set; }
+        public int EmployeeId { get; private set; }
         [Required]
         public string Content { get; private set; }
         [Required]
@@ -23,20 +21,21 @@ namespace TaskManagement.Domain.Entities
         public string? Document {  get; private set; }
         public bool IsActive { get; private set; } = true;
 
-        public Note(int taskWorkId, int creatorId, bool createdByTeamLead, string content, DateTime createdAt, string? document = null)
+        public Note(int taskWorkId, int employeeId, string content, DateTime createdAt, string? document = null)
         {
             TaskWorkId = taskWorkId;
-            CreatorId = creatorId;
-            CreatedByTeamLead = createdByTeamLead;
+            EmployeeId = employeeId;
             Content = content;
             CreatedAt = createdAt;
             Document = document;
         }
 
-        //navigational property for TeamLead
-        public TeamLead TeamLead { get; private set; }
+        //Navigational property for Employee
+        public Employee Employee { get; private set; }
 
-        //navigational property for TeamMember
-        public TeamLead TeamMember { get; private set; }
+        //Navigational property for TaskWork
+        public TaskWork TaskWork { get; private set; }
+
+
     }
 }

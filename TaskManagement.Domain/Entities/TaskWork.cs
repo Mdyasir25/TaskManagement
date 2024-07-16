@@ -24,9 +24,9 @@ namespace TaskManagement.Domain.Entities
             High
         }
         [Required]
-        public int TeamLeadId { get; private set; }  //Assigned By
+        public int AssignedById { get; private set; }
         [Required]
-        public int TeamMemberId { get; set; }     //Assigned To
+        public int AssignedToId { get; set; }    
         [Required]
         public string Title { get; private set; }
         public string? TaskDescription { get; private set; }
@@ -42,10 +42,10 @@ namespace TaskManagement.Domain.Entities
         public DateTime? CompletedAt { get; private set; }
         public bool TATBreached { get; private set; } = false;
 
-        public TaskWork(int teamLeadId, int teamMemberId, string title, PRIORITY priority, DateTime dueDate, string? taskDescription = null, DateTime? completedAt = null)
+        public TaskWork(int assignedBy, int assignedTo, string title, PRIORITY priority, DateTime dueDate, string? taskDescription = null, DateTime? completedAt = null)
         {
-            TeamLeadId = teamLeadId;
-            TeamMemberId = teamMemberId;
+            AssignedById = assignedBy;
+            AssignedToId = assignedTo;
             Title = title;
             Priority = priority;
             DueDate = dueDate;
@@ -53,10 +53,10 @@ namespace TaskManagement.Domain.Entities
             CompletedAt = completedAt;
         }
 
-        public TeamLead TeamLead { get; private set; }
-        public TeamMember TeamMember { get; private set; }
+        public Employee AssignedBy { get; private set; }
+        public Employee AssignedTo { get; private set; }
 
-        //navigational property for Notes because there is a one-to-many relationship between TaskWork and Notes
+        //Navigational property for Notes
         private readonly List<Note> notes = new();
         public IReadOnlyCollection<Note> Notes => notes.AsReadOnly();
     }

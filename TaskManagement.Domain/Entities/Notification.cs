@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManagement.Domain.SeedWork;
 
 namespace TaskManagement.Domain.Entities
 {
-    public class Notification
+    public class Notification: Entity
     {
         [Required]
         public int UserId { get; private set; }
