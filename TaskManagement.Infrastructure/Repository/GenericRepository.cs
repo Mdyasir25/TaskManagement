@@ -15,35 +15,45 @@ namespace TaskManagement.Infrastructure.Repository
             _context = context;
             _set = context.Set<T>();
         }
+        public async Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, params string[] includes)
+        {
+            var data = predicate == null? _set: _set.Where(predicate);
+            {
+                data = Include(includes).AsQueryable();
+            }
+            return await data.ToListAsync();
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params string[] includes)
+        {
+            var data = await _set.FirstOrDefaultAsync(predicate);
+            if (includes.Any())
+            {
+                data = Include(includes).FirstOrDefault();
+            }
+            return data;
+        }
+
+        public async Task<T> GetByIdAsync(int id, params string[] includes)
+        {
+            var data = await _set.FindAsync(id);
+            if (includes.Any())
+            {
+                data = Include(includes).FirstOrDefault();
+            }
+            return data;
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            var any = await _set.AnyAsync(predicate);
+            return any;
+        }
 
         public async Task<T> AddAsync(T entity)
         {
             await _set.AddAsync(entity);
             return entity;
-        }
-
-        //public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
-        //{
-        //    var any = await _set.AnyAsync(predicate);
-        //    return any;
-        //}
-
-        public async Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
-        {
-            var data = await _set.ToListAsync();
-            return data;
-        }
-
-        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
-        {
-            var data = await _set.FirstOrDefaultAsync(predicate);
-            return data;
-        }
-
-        public async Task<T> GetByIdAsync(int id)
-        {
-            var data = await _set.FindAsync(id);
-            return data;
         }
 
         public Task UpdateAsync(T entity)
@@ -52,14 +62,14 @@ namespace TaskManagement.Infrastructure.Repository
             return Task.CompletedTask;
         }
 
-        //private IEnumerable<T> Include(params string[] includes)
-        //{
-        //    IEnumerable<T> query = null;
-        //    foreach (var include in includes)
-        //    {
-        //        query = _set.Include(include);
-        //    }
-        //    return query ?? _set;
-        //}
+        private IEnumerable<T> Include(params string[] includes)
+        {
+            IEnumerable<T> query = null;
+            foreach (var include in includes)
+            {
+                query = _set.Include(include);
+            }
+            return query ?? _set;
+        }
     }
 }

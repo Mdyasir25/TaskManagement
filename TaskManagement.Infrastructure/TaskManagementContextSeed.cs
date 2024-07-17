@@ -16,7 +16,7 @@ namespace TaskManagement.Infrastructure
             {
                 if (!context.Employees.Any())
                 {
-                    context.Employees.Add(new Domain.Entities.Employee("Admin@gmail.com", "Admin", "Admin", "Password", Employee.ROLE.Admin));
+                    context.Employees.Add(new Domain.Entities.Employee("Admin@admin.com", "AdminFirstName", "AdminLastName", "10d6993f3b19c9a801ab0c1c89d98d2f59598324aa7500471f5d9ed42668ad68"));
                     await context.SaveChangesAsync();
                 }
             }

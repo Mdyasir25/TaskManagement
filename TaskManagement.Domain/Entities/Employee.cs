@@ -27,16 +27,15 @@ namespace TaskManagement.Domain.Entities
         [Required]
         public string Password { get; private set; }
         [Required]
-        public ROLE Role { get; private set; }
+        public ROLE Role { get; private set; } = ROLE.Subordinate;
         public bool IsActive { get; private set; } = true;
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
-        public Employee(string email, string firstname, string lastname, string password, ROLE role, int? managerId = null)
+        public Employee(string email, string firstname, string lastname, string password, int? managerId = null)
         {
             Email = email;
             Firstname = firstname;
             Lastname = lastname;
             Password = password;
-            Role = role;
             ManagerId = managerId;
         }
 

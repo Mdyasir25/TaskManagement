@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,10 @@ namespace TaskManagement.Domain.Entities
             Medium,
             High
         }
+        //[Required]
+        //public int AssignedById { get; private set; }
         [Required]
-        public int AssignedById { get; private set; }
-        [Required]
-        public int AssignedToId { get; set; }    
+        public int EmployeeId { get; set; }    
         [Required]
         public string Title { get; private set; }
         public string? TaskDescription { get; private set; }
@@ -42,10 +43,10 @@ namespace TaskManagement.Domain.Entities
         public DateTime? CompletedAt { get; private set; }
         public bool TATBreached { get; private set; } = false;
 
-        public TaskWork(int assignedBy, int assignedTo, string title, PRIORITY priority, DateTime dueDate, string? taskDescription = null, DateTime? completedAt = null)
+        public TaskWork(int employeeId, string title, PRIORITY priority, DateTime dueDate, string? taskDescription = null, DateTime? completedAt = null)
         {
-            AssignedById = assignedBy;
-            AssignedToId = assignedTo;
+            //AssignedById = assignedBy;
+            EmployeeId = employeeId;
             Title = title;
             Priority = priority;
             DueDate = dueDate;
@@ -53,8 +54,10 @@ namespace TaskManagement.Domain.Entities
             CompletedAt = completedAt;
         }
 
-        public Employee AssignedBy { get; private set; }
-        public Employee AssignedTo { get; private set; }
+        //[ForeignKey(nameof(AssignedById))]
+        //public Employee AssignedBy { get; private set; }
+        [ForeignKey(nameof(EmployeeId))]
+        public Employee Employee { get; private set; }
 
         //Navigational property for Notes
         private readonly List<Note> notes = new();

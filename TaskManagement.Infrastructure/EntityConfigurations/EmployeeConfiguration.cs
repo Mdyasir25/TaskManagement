@@ -16,11 +16,11 @@ namespace TaskManagement.Infrastructure.EntityConfigurations
             var navigationSO = builder.Metadata.FindNavigation(nameof(Employee.Subordinates));
             navigationSO.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            var navigationTW = builder.Metadata.FindNavigation(nameof(Employee.TaskWorks));
-            navigationTW.SetPropertyAccessMode(PropertyAccessMode.Field);
-
             var navigationNotes = builder.Metadata.FindNavigation(nameof(Employee.Notes));
             navigationNotes.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            var navigationTW = builder.Metadata.FindNavigation(nameof(Employee.TaskWorks));
+            navigationTW.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,11 @@ namespace TaskManagement.Domain.Entities
         }
 
         //Navigational property for Employee
+        [ForeignKey(nameof(EmployeeId))]
         public Employee Employee { get; private set; }
 
         //Navigational property for TaskWork
+        [ForeignKey(nameof(TaskWorkId))]
         public TaskWork TaskWork { get; private set; }
 
 

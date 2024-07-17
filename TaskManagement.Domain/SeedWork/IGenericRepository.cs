@@ -10,10 +10,10 @@ namespace TaskManagement.Domain.SeedWork
     public interface IGenericRepository<T> where T: Entity
     {
         IUnitOfWork UnitOfWork { get; }
-        // Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
-        Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
-        Task<T> GetAsync(Expression<Func<T, bool>> predicate);
-        Task<T> GetByIdAsync(int id);
+        Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params string[] includes);
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate, params string[] includes);
+        Task<T> GetByIdAsync(int id, params string[] includes);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
     }

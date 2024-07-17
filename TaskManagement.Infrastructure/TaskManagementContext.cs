@@ -15,7 +15,6 @@ namespace TaskManagement.Infrastructure
         public DbSet<Employee> Employees { get; set; }
         public DbSet<TaskWork> TaskWorks { get; set; }
         public DbSet<Note> Notes { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
 
         public TaskManagementContext(DbContextOptions<TaskManagementContext> options) : base(options)
         {
@@ -36,6 +35,12 @@ namespace TaskManagement.Infrastructure
             //    .WithMany(e => e.Subordinates)       // Specifies that each manager can have many Subordinates
             //    .HasForeignKey(e => e.ManagerId)     // Specifies the foreign key property for this relationship.
             //    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Note>()
+                .HasOne(t => t.TaskWork)
+                .WithMany(n => n.Notes)
+                .HasForeignKey(t => t.TaskWorkId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             base.OnModelCreating(modelBuilder);
